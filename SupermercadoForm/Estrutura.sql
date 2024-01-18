@@ -7,3 +7,5 @@
 select id, nome from categorias;
 
 select id, nome, sigla from estantes
+
+UPDATE estantes SET NOME = '', sigla = '' where id = 1

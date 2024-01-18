@@ -40,7 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxSiglaParaEditar = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBoxCodigo = new System.Windows.Forms.TextBox();
+            this.textBoxCodigoParaEditar = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonExcluir = new System.Windows.Forms.Button();
@@ -48,7 +48,7 @@
             this.labelCodigoExcluir = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.buttonListar = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBoxEstantes = new System.Windows.Forms.RichTextBox();
             this.groupBoxEstantes.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -163,17 +163,17 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "Código";
             // 
-            // textBoxCodigo
+            // textBoxCodigoParaEditar
             // 
-            this.textBoxCodigo.Location = new System.Drawing.Point(6, 81);
-            this.textBoxCodigo.Name = "textBoxCodigo";
-            this.textBoxCodigo.Size = new System.Drawing.Size(138, 23);
-            this.textBoxCodigo.TabIndex = 10;
+            this.textBoxCodigoParaEditar.Location = new System.Drawing.Point(6, 81);
+            this.textBoxCodigoParaEditar.Name = "textBoxCodigoParaEditar";
+            this.textBoxCodigoParaEditar.Size = new System.Drawing.Size(138, 23);
+            this.textBoxCodigoParaEditar.TabIndex = 10;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.labelNomeEditar);
-            this.groupBox1.Controls.Add(this.textBoxCodigo);
+            this.groupBox1.Controls.Add(this.textBoxCodigoParaEditar);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.buttonEditar);
             this.groupBox1.Controls.Add(this.label3);
@@ -206,6 +206,7 @@
             this.buttonExcluir.TabIndex = 2;
             this.buttonExcluir.Text = "Excluir";
             this.buttonExcluir.UseVisualStyleBackColor = true;
+            this.buttonExcluir.Click += new System.EventHandler(this.buttonExcluir_Click);
             // 
             // textBoxCodigoParaExcluir
             // 
@@ -226,7 +227,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.buttonListar);
-            this.groupBox3.Controls.Add(this.richTextBox1);
+            this.groupBox3.Controls.Add(this.richTextBoxEstantes);
             this.groupBox3.Location = new System.Drawing.Point(261, 12);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(357, 293);
@@ -244,13 +245,13 @@
             this.buttonListar.UseVisualStyleBackColor = true;
             this.buttonListar.Click += new System.EventHandler(this.buttonListar_Click);
             // 
-            // richTextBox1
+            // richTextBoxEstantes
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(6, 19);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(345, 216);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
+            this.richTextBoxEstantes.Location = new System.Drawing.Point(6, 19);
+            this.richTextBoxEstantes.Name = "richTextBoxEstantes";
+            this.richTextBoxEstantes.Size = new System.Drawing.Size(345, 216);
+            this.richTextBoxEstantes.TabIndex = 0;
+            this.richTextBoxEstantes.Text = "";
             // 
             // EstantesForms
             // 
@@ -264,6 +265,7 @@
             this.Name = "EstantesForms";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Estantes";
+            this.Load += new System.EventHandler(this.EstantesForms_Load);
             this.groupBoxEstantes.ResumeLayout(false);
             this.groupBoxEstantes.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -289,7 +291,7 @@
         private Button buttonCadastrar;
         private TextBox textBoxSiglaParaEditar;
         private Label label3;
-        private TextBox textBoxCodigo;
+        private TextBox textBoxCodigoParaEditar;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private Button buttonExcluir;
@@ -297,6 +299,6 @@
         private Label labelCodigoExcluir;
         private GroupBox groupBox3;
         private Button buttonListar;
-        private RichTextBox richTextBox1;
+        private RichTextBox richTextBoxEstantes;
     }
 }
