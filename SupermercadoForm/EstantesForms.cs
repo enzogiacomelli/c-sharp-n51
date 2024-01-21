@@ -39,7 +39,9 @@ namespace SupermercadoForm
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();
-            comando.CommandText = "INSERT INTO estantes (NOME, SIGLA) VALUES ('" + nome + "', '" + sigla + "')";
+            comando.CommandText = "INSERT INTO estantes (NOME, SIGLA) VALUES (@NOME, @SIGLA)";
+            comando.Parameters.AddWithValue("@NOME", nome);
+            comando.Parameters.AddWithValue("@SIGLA", sigla);
 
             try
             {
@@ -104,7 +106,6 @@ namespace SupermercadoForm
 
         private void buttonListar_Click(object sender, EventArgs e)
         {
-            dataGridViewEstantes.Rows.Clear();
             ListarEstantes();
         }
 
@@ -120,6 +121,7 @@ namespace SupermercadoForm
             DataTable tabelaEmMemoria = new DataTable();
             tabelaEmMemoria.Load(comando.ExecuteReader());
 
+            dataGridViewEstantes.Rows.Clear();
             for (int i = 0; i < tabelaEmMemoria.Rows.Count; i++)
             {
                 //obter o id e o nome do registro percorrido
@@ -140,11 +142,23 @@ namespace SupermercadoForm
         }
         public void ExcluirEstante()
         {
-            string idExclusao = textBoxCodigoParaExcluir.Text;
-            if(idExclusao == String.Empty)
+            //verificando se tem alguma linha selecionada antes de tentar executar a exclusão
+            if(dataGridViewEstantes.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Informe o Código para exclusão!");
-                textBoxCodigoParaExcluir.Focus();
+                MessageBox.Show("Nenhuma estante cadastrada", "AVISO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //pegando a linha selecionada
+            DataGridViewRow linhaSelecionada = dataGridViewEstantes.SelectedRows[0];
+            //pegando o id da linha selecionada
+            int id = Convert.ToInt32(linhaSelecionada.Cells[0].Value);//0 pq a primeira coluna do dataGridView é o id
+            string nome = linhaSelecionada.Cells[1].Value.ToString();
+
+            //vericiando se realmente deseja excluir o registro
+            DialogResult resultadoQuestionamento =  MessageBox.Show("Deseja realmente apagar " + nome + "?", "AVISO", MessageBoxButtons.YesNo);
+            if(resultadoQuestionamento == DialogResult.No)
+            {
                 return;
             }
 
@@ -153,13 +167,13 @@ namespace SupermercadoForm
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();
-            comando.CommandText = "DELETE FROM estantes where id = " + idExclusao;
+            comando.CommandText = "DELETE FROM estantes where id = @ID";
+            comando.Parameters.AddWithValue("@ID", id);
 
             try
             {
                 comando.ExecuteNonQuery();
                 MessageBox.Show("Exclusão realizada com sucesso!");
-                textBoxCodigoParaExcluir.Clear();
                 ListarEstantes();
             }
             catch (Exception ex)

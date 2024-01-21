@@ -42,10 +42,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxCodigoParaEditar = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonExcluir = new System.Windows.Forms.Button();
-            this.textBoxCodigoParaExcluir = new System.Windows.Forms.TextBox();
-            this.labelCodigoExcluir = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridViewEstantes = new System.Windows.Forms.DataGridView();
             this.ColumnCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,7 +51,6 @@
             this.buttonListar = new System.Windows.Forms.Button();
             this.groupBoxEstantes.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEstantes)).BeginInit();
             this.SuspendLayout();
@@ -191,21 +187,9 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Editar Estante";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.buttonExcluir);
-            this.groupBox2.Controls.Add(this.textBoxCodigoParaExcluir);
-            this.groupBox2.Controls.Add(this.labelCodigoExcluir);
-            this.groupBox2.Location = new System.Drawing.Point(12, 235);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(233, 70);
-            this.groupBox2.TabIndex = 12;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Excluir Estante";
-            // 
             // buttonExcluir
             // 
-            this.buttonExcluir.Location = new System.Drawing.Point(150, 37);
+            this.buttonExcluir.Location = new System.Drawing.Point(193, 264);
             this.buttonExcluir.Name = "buttonExcluir";
             this.buttonExcluir.Size = new System.Drawing.Size(77, 23);
             this.buttonExcluir.TabIndex = 2;
@@ -213,24 +197,9 @@
             this.buttonExcluir.UseVisualStyleBackColor = true;
             this.buttonExcluir.Click += new System.EventHandler(this.buttonExcluir_Click);
             // 
-            // textBoxCodigoParaExcluir
-            // 
-            this.textBoxCodigoParaExcluir.Location = new System.Drawing.Point(6, 37);
-            this.textBoxCodigoParaExcluir.Name = "textBoxCodigoParaExcluir";
-            this.textBoxCodigoParaExcluir.Size = new System.Drawing.Size(138, 23);
-            this.textBoxCodigoParaExcluir.TabIndex = 1;
-            // 
-            // labelCodigoExcluir
-            // 
-            this.labelCodigoExcluir.AutoSize = true;
-            this.labelCodigoExcluir.Location = new System.Drawing.Point(8, 19);
-            this.labelCodigoExcluir.Name = "labelCodigoExcluir";
-            this.labelCodigoExcluir.Size = new System.Drawing.Size(46, 15);
-            this.labelCodigoExcluir.TabIndex = 0;
-            this.labelCodigoExcluir.Text = "Código";
-            // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.buttonExcluir);
             this.groupBox3.Controls.Add(this.dataGridViewEstantes);
             this.groupBox3.Controls.Add(this.buttonListar);
             this.groupBox3.Location = new System.Drawing.Point(261, 12);
@@ -250,6 +219,7 @@
             this.dataGridViewEstantes.Location = new System.Drawing.Point(5, 22);
             this.dataGridViewEstantes.Name = "dataGridViewEstantes";
             this.dataGridViewEstantes.RowTemplate.Height = 25;
+            this.dataGridViewEstantes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewEstantes.Size = new System.Drawing.Size(346, 236);
             this.dataGridViewEstantes.TabIndex = 14;
             // 
@@ -284,7 +254,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(629, 313);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBoxEstantes);
             this.Name = "EstantesForms";
@@ -295,8 +264,6 @@
             this.groupBoxEstantes.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEstantes)).EndInit();
             this.ResumeLayout(false);
@@ -318,10 +285,7 @@
         private Label label3;
         private TextBox textBoxCodigoParaEditar;
         private GroupBox groupBox1;
-        private GroupBox groupBox2;
         private Button buttonExcluir;
-        private TextBox textBoxCodigoParaExcluir;
-        private Label labelCodigoExcluir;
         private GroupBox groupBox3;
         private Button buttonListar;
         private MaskedTextBox maskedTextBoxSigla;
