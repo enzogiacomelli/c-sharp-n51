@@ -5,6 +5,9 @@ namespace SupermercadoForm
 {
     public partial class EstantesForms : Form
     {
+
+        public string ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30";
+
         public EstantesForms()
         {
             InitializeComponent();
@@ -23,7 +26,7 @@ namespace SupermercadoForm
         public void CadastrarEstante()
         {
             string nome = textBoxNome.Text;
-            string sigla = textBoxSigla.Text;
+            string sigla = maskedTextBoxSigla.Text;
 
             if(nome == String.Empty || sigla == String.Empty)
             {
@@ -32,7 +35,7 @@ namespace SupermercadoForm
             }
 
             SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30";
+            conexao.ConnectionString = ConnectionString;
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();
@@ -43,7 +46,7 @@ namespace SupermercadoForm
                 comando.ExecuteNonQuery();
                 MessageBox.Show("Estante cadastrada com sucesso!");
                 textBoxNome.Clear();
-                textBoxSigla.Clear();
+                maskedTextBoxSigla.Clear();
                 ListarEstantes();
             }
             catch (Exception ex)
@@ -76,7 +79,7 @@ namespace SupermercadoForm
             }
 
             SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30";
+            conexao.ConnectionString = ConnectionString;
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();
@@ -107,7 +110,7 @@ namespace SupermercadoForm
         public void ListarEstantes()
         {
             SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30";
+            conexao.ConnectionString = ConnectionString;
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();
@@ -118,6 +121,7 @@ namespace SupermercadoForm
 
             richTextBoxEstantes.Clear();
 
+            
             for (int i = 0; i < tabelaEmMemoria.Rows.Count; i++)
             {
                 //obter o id e o nome do registro percorrido
@@ -146,7 +150,7 @@ namespace SupermercadoForm
             }
 
             SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30";
+            conexao.ConnectionString = ConnectionString;
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();

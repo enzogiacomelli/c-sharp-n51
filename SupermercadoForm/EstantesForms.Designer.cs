@@ -31,8 +31,8 @@
             this.labelNome = new System.Windows.Forms.Label();
             this.labelSigla = new System.Windows.Forms.Label();
             this.groupBoxEstantes = new System.Windows.Forms.GroupBox();
-            this.textBoxSigla = new System.Windows.Forms.TextBox();
             this.buttonCadastrar = new System.Windows.Forms.Button();
+            this.maskedTextBoxSigla = new System.Windows.Forms.MaskedTextBox();
             this.textBoxNome = new System.Windows.Forms.TextBox();
             this.labelNomeEditar = new System.Windows.Forms.Label();
             this.textBoxNomeParaEditar = new System.Windows.Forms.TextBox();
@@ -47,12 +47,17 @@
             this.textBoxCodigoParaExcluir = new System.Windows.Forms.TextBox();
             this.labelCodigoExcluir = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dataGridViewEstantes = new System.Windows.Forms.DataGridView();
+            this.ColumnCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnNome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnSigla = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonListar = new System.Windows.Forms.Button();
             this.richTextBoxEstantes = new System.Windows.Forms.RichTextBox();
             this.groupBoxEstantes.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEstantes)).BeginInit();
             this.SuspendLayout();
             // 
             // labelNome
@@ -76,8 +81,8 @@
             // 
             // groupBoxEstantes
             // 
-            this.groupBoxEstantes.Controls.Add(this.textBoxSigla);
             this.groupBoxEstantes.Controls.Add(this.buttonCadastrar);
+            this.groupBoxEstantes.Controls.Add(this.maskedTextBoxSigla);
             this.groupBoxEstantes.Controls.Add(this.textBoxNome);
             this.groupBoxEstantes.Controls.Add(this.labelSigla);
             this.groupBoxEstantes.Controls.Add(this.labelNome);
@@ -88,13 +93,6 @@
             this.groupBoxEstantes.TabStop = false;
             this.groupBoxEstantes.Text = "Nova Estante";
             // 
-            // textBoxSigla
-            // 
-            this.textBoxSigla.Location = new System.Drawing.Point(150, 37);
-            this.textBoxSigla.Name = "textBoxSigla";
-            this.textBoxSigla.Size = new System.Drawing.Size(77, 23);
-            this.textBoxSigla.TabIndex = 2;
-            // 
             // buttonCadastrar
             // 
             this.buttonCadastrar.Location = new System.Drawing.Point(150, 66);
@@ -104,6 +102,14 @@
             this.buttonCadastrar.Text = "Cadastrar";
             this.buttonCadastrar.UseVisualStyleBackColor = true;
             this.buttonCadastrar.Click += new System.EventHandler(this.buttonCadastrar_Click);
+            // 
+            // maskedTextBoxSigla
+            // 
+            this.maskedTextBoxSigla.Location = new System.Drawing.Point(150, 37);
+            this.maskedTextBoxSigla.Mask = "AAA";
+            this.maskedTextBoxSigla.Name = "maskedTextBoxSigla";
+            this.maskedTextBoxSigla.Size = new System.Drawing.Size(77, 23);
+            this.maskedTextBoxSigla.TabIndex = 4;
             // 
             // textBoxNome
             // 
@@ -226,14 +232,42 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.dataGridViewEstantes);
             this.groupBox3.Controls.Add(this.buttonListar);
-            this.groupBox3.Controls.Add(this.richTextBoxEstantes);
             this.groupBox3.Location = new System.Drawing.Point(261, 12);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(357, 293);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Estantes Cadastradas";
+            // 
+            // dataGridViewEstantes
+            // 
+            this.dataGridViewEstantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewEstantes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnCodigo,
+            this.ColumnNome,
+            this.ColumnSigla});
+            this.dataGridViewEstantes.Location = new System.Drawing.Point(5, 22);
+            this.dataGridViewEstantes.Name = "dataGridViewEstantes";
+            this.dataGridViewEstantes.RowTemplate.Height = 25;
+            this.dataGridViewEstantes.Size = new System.Drawing.Size(346, 236);
+            this.dataGridViewEstantes.TabIndex = 14;
+            // 
+            // ColumnCodigo
+            // 
+            this.ColumnCodigo.HeaderText = "Código";
+            this.ColumnCodigo.Name = "ColumnCodigo";
+            // 
+            // ColumnNome
+            // 
+            this.ColumnNome.HeaderText = "Nome";
+            this.ColumnNome.Name = "ColumnNome";
+            // 
+            // ColumnSigla
+            // 
+            this.ColumnSigla.HeaderText = "Sigla";
+            this.ColumnSigla.Name = "ColumnSigla";
             // 
             // buttonListar
             // 
@@ -247,9 +281,9 @@
             // 
             // richTextBoxEstantes
             // 
-            this.richTextBoxEstantes.Location = new System.Drawing.Point(6, 19);
+            this.richTextBoxEstantes.Location = new System.Drawing.Point(624, 34);
             this.richTextBoxEstantes.Name = "richTextBoxEstantes";
-            this.richTextBoxEstantes.Size = new System.Drawing.Size(345, 216);
+            this.richTextBoxEstantes.Size = new System.Drawing.Size(345, 235);
             this.richTextBoxEstantes.TabIndex = 0;
             this.richTextBoxEstantes.Text = "";
             // 
@@ -257,7 +291,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 313);
+            this.ClientSize = new System.Drawing.Size(977, 313);
+            this.Controls.Add(this.richTextBoxEstantes);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -273,6 +308,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEstantes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -282,7 +318,6 @@
         private Label labelNome;
         private Label labelSigla;
         private GroupBox groupBoxEstantes;
-        private TextBox textBoxSigla;
         private TextBox textBoxNome;
         private Label label2;
         private Button buttonEditar;
@@ -300,5 +335,10 @@
         private GroupBox groupBox3;
         private Button buttonListar;
         private RichTextBox richTextBoxEstantes;
+        private MaskedTextBox maskedTextBoxSigla;
+        private DataGridView dataGridViewEstantes;
+        private DataGridViewTextBoxColumn ColumnCodigo;
+        private DataGridViewTextBoxColumn ColumnNome;
+        private DataGridViewTextBoxColumn ColumnSigla;
     }
 }

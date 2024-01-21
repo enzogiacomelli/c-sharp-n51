@@ -5,6 +5,8 @@ namespace SupermercadoForm
 {
     public partial class CategoriaForm : Form
     {
+        public string ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30";
+
         public CategoriaForm()
         {
             InitializeComponent();
@@ -26,7 +28,7 @@ namespace SupermercadoForm
             }
 
             SqlConnection conexao = new SqlConnection(); //cria conexão
-            conexao.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30"; //define a conexão com o caminho onde esta o banco
+            conexao.ConnectionString = ConnectionString; //define a conexão com o caminho onde esta o banco
             conexao.Open(); //abre a conexão
 
             SqlCommand comando = conexao.CreateCommand(); //cria um comando sql
@@ -47,7 +49,7 @@ namespace SupermercadoForm
         private void ListarCategorias()
         {
             SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30"; //define a conexão com o caminho onde esta o banco
+            conexao.ConnectionString = ConnectionString; //define a conexão com o caminho onde esta o banco
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();
@@ -83,10 +85,17 @@ namespace SupermercadoForm
 
         private void ApagarCategoria()
         {
+            if (textBoxCodigoApagar.Text == String.Empty)
+            {
+                MessageBox.Show("Informe o código!");
+                textBoxCodigoApagar.Focus();
+                return;
+            }
+
             int codigoParaApagar = Convert.ToInt32(textBoxCodigoApagar.Text);
 
             SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30"; //define a conexão com o caminho onde esta o banco
+            conexao.ConnectionString = ConnectionString; //define a conexão com o caminho onde esta o banco
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();
@@ -136,7 +145,7 @@ namespace SupermercadoForm
             string nome = textBoxNomeParaAlterar.Text;
 
             SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30"; //define a conexão com o caminho onde esta o banco
+            conexao.ConnectionString = ConnectionString; //define a conexão com o caminho onde esta o banco
             conexao.Open();
 
             SqlCommand comando = conexao.CreateCommand();
