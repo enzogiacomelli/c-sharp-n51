@@ -104,6 +104,7 @@ namespace SupermercadoForm
 
         private void buttonListar_Click(object sender, EventArgs e)
         {
+            dataGridViewEstantes.Rows.Clear();
             ListarEstantes();
         }
 
@@ -119,9 +120,6 @@ namespace SupermercadoForm
             DataTable tabelaEmMemoria = new DataTable();
             tabelaEmMemoria.Load(comando.ExecuteReader());
 
-            richTextBoxEstantes.Clear();
-
-            
             for (int i = 0; i < tabelaEmMemoria.Rows.Count; i++)
             {
                 //obter o id e o nome do registro percorrido
@@ -130,7 +128,8 @@ namespace SupermercadoForm
                 string nome = registro["nome"].ToString();
                 string sigla = registro["sigla"].ToString();
                 //listando categorias
-                richTextBoxEstantes.AppendText("Código: " + id + "\nEstante: " + nome + "(" + sigla + ")\n");
+                //adicionando as linhas da tabela em memoria para o datagrid, passando como objeto
+                dataGridViewEstantes.Rows.Add(new object[] { id, nome, sigla });
             }
             conexao.Close();
         }

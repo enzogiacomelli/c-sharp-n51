@@ -52,7 +52,6 @@
             this.ColumnNome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnSigla = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonListar = new System.Windows.Forms.Button();
-            this.richTextBoxEstantes = new System.Windows.Forms.RichTextBox();
             this.groupBoxEstantes.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -275,24 +274,15 @@
             this.buttonListar.Name = "buttonListar";
             this.buttonListar.Size = new System.Drawing.Size(75, 23);
             this.buttonListar.TabIndex = 1;
-            this.buttonListar.Text = "Listar";
+            this.buttonListar.Text = "Atualizar";
             this.buttonListar.UseVisualStyleBackColor = true;
             this.buttonListar.Click += new System.EventHandler(this.buttonListar_Click);
-            // 
-            // richTextBoxEstantes
-            // 
-            this.richTextBoxEstantes.Location = new System.Drawing.Point(624, 34);
-            this.richTextBoxEstantes.Name = "richTextBoxEstantes";
-            this.richTextBoxEstantes.Size = new System.Drawing.Size(345, 235);
-            this.richTextBoxEstantes.TabIndex = 0;
-            this.richTextBoxEstantes.Text = "";
             // 
             // EstantesForms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(977, 313);
-            this.Controls.Add(this.richTextBoxEstantes);
+            this.ClientSize = new System.Drawing.Size(629, 313);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -334,7 +324,6 @@
         private Label labelCodigoExcluir;
         private GroupBox groupBox3;
         private Button buttonListar;
-        private RichTextBox richTextBoxEstantes;
         private MaskedTextBox maskedTextBoxSigla;
         private DataGridView dataGridViewEstantes;
         private DataGridViewTextBoxColumn ColumnCodigo;
