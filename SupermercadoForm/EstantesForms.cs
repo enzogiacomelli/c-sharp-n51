@@ -90,7 +90,7 @@ namespace SupermercadoForm
             //pegar a linha selecionada
             DataGridViewRow linhaSelecionada = dataGridViewEstantes.SelectedRows[0];
             //pegar o id da linha selecionada
-            IdParaEditar = Convert.ToInt32(linhaSelecionada.Cells[0].Value);
+            IdParaEditar = Convert.ToInt32(linhaSelecionada.Cells[0].Value); //aqui é alterado o IdParaEditar. Isso vai impactar no clique do botão de Cadastrar
 
             SqlConnection conexao = new SqlConnection();
             conexao.ConnectionString = ConnectionString;
@@ -117,7 +117,7 @@ namespace SupermercadoForm
             conexao.Close();
         }
 
-        private void AtualizarEstante()//atualizar o registro
+        private void AtualizarEstante()//Atualiza o registro. Só cai aqui se teve clique no botão editar, se não o metodo usado no botão de cadastro vai ser o CadastrarEstante
         {
             //obtendo nome e sigla do form
             string nome = textBoxNome.Text;
@@ -132,7 +132,7 @@ namespace SupermercadoForm
             comando.CommandText = "UPDATE estantes SET nome = @NOME, sigla = @SIGLA WHERE id = @ID";
             comando.Parameters.AddWithValue("@NOME", nome);
             comando.Parameters.AddWithValue("SIGLA", sigla);
-            comando.Parameters.AddWithValue("ID", IdParaEditar);
+            comando.Parameters.AddWithValue("ID", IdParaEditar); //id para editar é pego no metodo de EditarEstante.
 
             //executar o update armazenando a quantidade de registros afetados
             int quantidadeDeRegistrosAfetados = comando.ExecuteNonQuery();
@@ -240,7 +240,7 @@ namespace SupermercadoForm
 
         }
 
-        private void textBoxPesquisar_KeyDown(object sender, KeyEventArgs e)
+        private void textBoxPesquisar_KeyDown(object sender, KeyEventArgs e)//pesquisa por um registro especifico, via nome
         {
             if(e.KeyCode == Keys.Enter)
             {
