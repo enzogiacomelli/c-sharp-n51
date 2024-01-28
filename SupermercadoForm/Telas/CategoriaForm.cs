@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 
-namespace SupermercadoForm
+namespace SupermercadoForm.Telas
 {
     public partial class CategoriaForm : Form
     {

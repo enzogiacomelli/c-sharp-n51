@@ -1,4 +1,4 @@
-namespace SupermercadoForm
+namespace SupermercadoForm.Telas
 {
     internal static class Program
     {
