@@ -8,6 +8,5 @@ select id, nome from categorias;
 
 select id, nome, sigla from estantes
 
-
 select id, nome, sigla from estantes WHERE nome LIKE '%ant%'
 
