@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
-            labelPesquisa = new Label();
-            textBoxPesquisa = new TextBox();
-            labelOrdem = new Label();
-            comboBoxOrdem = new ComboBox();
-            buttonNovo = new Button();
-            label1 = new Label();
             textBoxPrecoUnitario = new TextBox();
+            label1 = new Label();
+            buttonSalvar = new Button();
+            comboBoxCategoria = new ComboBox();
+            labelCategoria = new Label();
+            textBoxNome = new TextBox();
+            labelNome = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -43,58 +43,23 @@
             // 
             groupBox1.Controls.Add(textBoxPrecoUnitario);
             groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(buttonNovo);
-            groupBox1.Controls.Add(comboBoxOrdem);
-            groupBox1.Controls.Add(labelOrdem);
-            groupBox1.Controls.Add(textBoxPesquisa);
-            groupBox1.Controls.Add(labelPesquisa);
+            groupBox1.Controls.Add(buttonSalvar);
+            groupBox1.Controls.Add(comboBoxCategoria);
+            groupBox1.Controls.Add(labelCategoria);
+            groupBox1.Controls.Add(textBoxNome);
+            groupBox1.Controls.Add(labelNome);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(261, 213);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             // 
-            // labelPesquisa
+            // textBoxPrecoUnitario
             // 
-            labelPesquisa.AutoSize = true;
-            labelPesquisa.Location = new Point(6, 19);
-            labelPesquisa.Name = "labelPesquisa";
-            labelPesquisa.Size = new Size(53, 15);
-            labelPesquisa.TabIndex = 9;
-            labelPesquisa.Text = "Pesquisa";
-            // 
-            // textBoxPesquisa
-            // 
-            textBoxPesquisa.Location = new Point(6, 37);
-            textBoxPesquisa.Name = "textBoxPesquisa";
-            textBoxPesquisa.Size = new Size(247, 23);
-            textBoxPesquisa.TabIndex = 10;
-            // 
-            // labelOrdem
-            // 
-            labelOrdem.AutoSize = true;
-            labelOrdem.Location = new Point(6, 75);
-            labelOrdem.Name = "labelOrdem";
-            labelOrdem.Size = new Size(44, 15);
-            labelOrdem.TabIndex = 11;
-            labelOrdem.Text = "Ordem";
-            // 
-            // comboBoxOrdem
-            // 
-            comboBoxOrdem.FormattingEnabled = true;
-            comboBoxOrdem.Location = new Point(6, 93);
-            comboBoxOrdem.Name = "comboBoxOrdem";
-            comboBoxOrdem.Size = new Size(247, 23);
-            comboBoxOrdem.TabIndex = 12;
-            // 
-            // buttonNovo
-            // 
-            buttonNovo.Location = new Point(178, 181);
-            buttonNovo.Name = "buttonNovo";
-            buttonNovo.Size = new Size(75, 23);
-            buttonNovo.TabIndex = 1;
-            buttonNovo.Text = "Novo";
-            buttonNovo.UseVisualStyleBackColor = true;
+            textBoxPrecoUnitario.Location = new Point(6, 152);
+            textBoxPrecoUnitario.Name = "textBoxPrecoUnitario";
+            textBoxPrecoUnitario.Size = new Size(247, 23);
+            textBoxPrecoUnitario.TabIndex = 14;
             // 
             // label1
             // 
@@ -105,12 +70,48 @@
             label1.TabIndex = 13;
             label1.Text = "Preço Unitário";
             // 
-            // textBoxPrecoUnitario
+            // buttonSalvar
             // 
-            textBoxPrecoUnitario.Location = new Point(6, 152);
-            textBoxPrecoUnitario.Name = "textBoxPrecoUnitario";
-            textBoxPrecoUnitario.Size = new Size(247, 23);
-            textBoxPrecoUnitario.TabIndex = 14;
+            buttonSalvar.Location = new Point(178, 181);
+            buttonSalvar.Name = "buttonSalvar";
+            buttonSalvar.Size = new Size(75, 23);
+            buttonSalvar.TabIndex = 1;
+            buttonSalvar.Text = "Salvar";
+            buttonSalvar.UseVisualStyleBackColor = true;
+            buttonSalvar.Click += buttonSalvar_Click;
+            // 
+            // comboBoxCategoria
+            // 
+            comboBoxCategoria.FormattingEnabled = true;
+            comboBoxCategoria.Location = new Point(6, 93);
+            comboBoxCategoria.Name = "comboBoxCategoria";
+            comboBoxCategoria.Size = new Size(247, 23);
+            comboBoxCategoria.TabIndex = 12;
+            // 
+            // labelCategoria
+            // 
+            labelCategoria.AutoSize = true;
+            labelCategoria.Location = new Point(6, 75);
+            labelCategoria.Name = "labelCategoria";
+            labelCategoria.Size = new Size(58, 15);
+            labelCategoria.TabIndex = 11;
+            labelCategoria.Text = "Categoria";
+            // 
+            // textBoxNome
+            // 
+            textBoxNome.Location = new Point(6, 37);
+            textBoxNome.Name = "textBoxNome";
+            textBoxNome.Size = new Size(247, 23);
+            textBoxNome.TabIndex = 10;
+            // 
+            // labelNome
+            // 
+            labelNome.AutoSize = true;
+            labelNome.Location = new Point(6, 19);
+            labelNome.Name = "labelNome";
+            labelNome.Size = new Size(40, 15);
+            labelNome.TabIndex = 9;
+            labelNome.Text = "Nome";
             // 
             // ProdutoCadastroForm
             // 
@@ -118,7 +119,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(285, 234);
             Controls.Add(groupBox1);
+            MaximizeBox = false;
             Name = "ProdutoCadastroForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Cadastro";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -128,11 +131,11 @@
         #endregion
 
         private GroupBox groupBox1;
-        private Label labelPesquisa;
-        private TextBox textBoxPesquisa;
-        private Label labelOrdem;
-        private ComboBox comboBoxOrdem;
-        private Button buttonNovo;
+        private Label labelNome;
+        private TextBox textBoxNome;
+        private Label labelCategoria;
+        private ComboBox comboBoxCategoria;
+        private Button buttonSalvar;
         private TextBox textBoxPrecoUnitario;
         private Label label1;
     }

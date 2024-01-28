@@ -30,20 +30,26 @@
         {
             dataGridViewProdutos = new DataGridView();
             groupBox1 = new GroupBox();
-            buttonNovo = new Button();
-            buttonEditar = new Button();
             buttonApagar = new Button();
+            buttonEditar = new Button();
+            buttonNovo = new Button();
             labelQuantidadeTotalValor = new Label();
             labelQuantidadeTotal = new Label();
             labelQuantidade = new Label();
             comboBoxQuantidade = new ComboBox();
-            labelOrdem = new Label();
-            comboBoxOrdem = new ComboBox();
+            labelExibir = new Label();
+            comboBoxOrdemColuna = new ComboBox();
             labelPesquisa = new Label();
             textBoxPesquisa = new TextBox();
             buttonPesquisar = new Button();
             buttonLimparFiltros = new Button();
             groupBox2 = new GroupBox();
+            labelOrdenar = new Label();
+            comboBoxOrdenar = new ComboBox();
+            ColumnId = new DataGridViewTextBoxColumn();
+            ColumnNome = new DataGridViewTextBoxColumn();
+            ColumnCategoria = new DataGridViewTextBoxColumn();
+            ColumnPrecoUnitario = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProdutos).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -51,11 +57,15 @@
             // 
             // dataGridViewProdutos
             // 
+            dataGridViewProdutos.AllowUserToAddRows = false;
+            dataGridViewProdutos.AllowUserToDeleteRows = false;
             dataGridViewProdutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewProdutos.Location = new Point(18, 92);
+            dataGridViewProdutos.Columns.AddRange(new DataGridViewColumn[] { ColumnId, ColumnNome, ColumnCategoria, ColumnPrecoUnitario });
+            dataGridViewProdutos.Location = new Point(6, 84);
             dataGridViewProdutos.Name = "dataGridViewProdutos";
+            dataGridViewProdutos.ReadOnly = true;
             dataGridViewProdutos.RowTemplate.Height = 25;
-            dataGridViewProdutos.Size = new Size(418, 227);
+            dataGridViewProdutos.Size = new Size(438, 227);
             dataGridViewProdutos.TabIndex = 0;
             // 
             // groupBox1
@@ -69,14 +79,14 @@
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             // 
-            // buttonNovo
+            // buttonApagar
             // 
-            buttonNovo.Location = new Point(6, 22);
-            buttonNovo.Name = "buttonNovo";
-            buttonNovo.Size = new Size(75, 23);
-            buttonNovo.TabIndex = 0;
-            buttonNovo.Text = "Novo";
-            buttonNovo.UseVisualStyleBackColor = true;
+            buttonApagar.Location = new Point(6, 80);
+            buttonApagar.Name = "buttonApagar";
+            buttonApagar.Size = new Size(75, 23);
+            buttonApagar.TabIndex = 2;
+            buttonApagar.Text = "Apagar";
+            buttonApagar.UseVisualStyleBackColor = true;
             // 
             // buttonEditar
             // 
@@ -87,14 +97,15 @@
             buttonEditar.Text = "Editar";
             buttonEditar.UseVisualStyleBackColor = true;
             // 
-            // buttonApagar
+            // buttonNovo
             // 
-            buttonApagar.Location = new Point(6, 80);
-            buttonApagar.Name = "buttonApagar";
-            buttonApagar.Size = new Size(75, 23);
-            buttonApagar.TabIndex = 2;
-            buttonApagar.Text = "Apagar";
-            buttonApagar.UseVisualStyleBackColor = true;
+            buttonNovo.Location = new Point(6, 22);
+            buttonNovo.Name = "buttonNovo";
+            buttonNovo.Size = new Size(75, 23);
+            buttonNovo.TabIndex = 0;
+            buttonNovo.Text = "Novo";
+            buttonNovo.UseVisualStyleBackColor = true;
+            buttonNovo.Click += buttonNovo_Click;
             // 
             // labelQuantidadeTotalValor
             // 
@@ -126,32 +137,34 @@
             // comboBoxQuantidade
             // 
             comboBoxQuantidade.FormattingEnabled = true;
+            comboBoxQuantidade.Items.AddRange(new object[] { "10 itens", "25 itens", "50 itens", "100 itens" });
             comboBoxQuantidade.Location = new Point(18, 27);
             comboBoxQuantidade.Name = "comboBoxQuantidade";
-            comboBoxQuantidade.Size = new Size(115, 23);
+            comboBoxQuantidade.Size = new Size(72, 23);
             comboBoxQuantidade.TabIndex = 5;
             // 
-            // labelOrdem
+            // labelExibir
             // 
-            labelOrdem.AutoSize = true;
-            labelOrdem.Location = new Point(139, 9);
-            labelOrdem.Name = "labelOrdem";
-            labelOrdem.Size = new Size(44, 15);
-            labelOrdem.TabIndex = 6;
-            labelOrdem.Text = "Ordem";
+            labelExibir.AutoSize = true;
+            labelExibir.Location = new Point(84, 0);
+            labelExibir.Name = "labelExibir";
+            labelExibir.Size = new Size(36, 15);
+            labelExibir.TabIndex = 6;
+            labelExibir.Text = "Exibir";
             // 
-            // comboBoxOrdem
+            // comboBoxOrdemColuna
             // 
-            comboBoxOrdem.FormattingEnabled = true;
-            comboBoxOrdem.Location = new Point(139, 27);
-            comboBoxOrdem.Name = "comboBoxOrdem";
-            comboBoxOrdem.Size = new Size(121, 23);
-            comboBoxOrdem.TabIndex = 7;
+            comboBoxOrdemColuna.FormattingEnabled = true;
+            comboBoxOrdemColuna.Items.AddRange(new object[] { "Código", "Nome", "Categoria", "Preço Unitário" });
+            comboBoxOrdemColuna.Location = new Point(84, 19);
+            comboBoxOrdemColuna.Name = "comboBoxOrdemColuna";
+            comboBoxOrdemColuna.Size = new Size(89, 23);
+            comboBoxOrdemColuna.TabIndex = 7;
             // 
             // labelPesquisa
             // 
             labelPesquisa.AutoSize = true;
-            labelPesquisa.Location = new Point(266, 8);
+            labelPesquisa.Location = new Point(274, 0);
             labelPesquisa.Name = "labelPesquisa";
             labelPesquisa.Size = new Size(53, 15);
             labelPesquisa.TabIndex = 8;
@@ -159,14 +172,14 @@
             // 
             // textBoxPesquisa
             // 
-            textBoxPesquisa.Location = new Point(266, 26);
+            textBoxPesquisa.Location = new Point(274, 19);
             textBoxPesquisa.Name = "textBoxPesquisa";
-            textBoxPesquisa.Size = new Size(170, 23);
+            textBoxPesquisa.Size = new Size(167, 23);
             textBoxPesquisa.TabIndex = 9;
             // 
             // buttonPesquisar
             // 
-            buttonPesquisar.Location = new Point(361, 55);
+            buttonPesquisar.Location = new Point(369, 47);
             buttonPesquisar.Name = "buttonPesquisar";
             buttonPesquisar.Size = new Size(75, 23);
             buttonPesquisar.TabIndex = 10;
@@ -175,7 +188,7 @@
             // 
             // buttonLimparFiltros
             // 
-            buttonLimparFiltros.Location = new Point(266, 55);
+            buttonLimparFiltros.Location = new Point(274, 47);
             buttonLimparFiltros.Name = "buttonLimparFiltros";
             buttonLimparFiltros.Size = new Size(88, 23);
             buttonLimparFiltros.TabIndex = 11;
@@ -185,29 +198,73 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(labelOrdenar);
+            groupBox2.Controls.Add(comboBoxOrdenar);
+            groupBox2.Controls.Add(labelPesquisa);
+            groupBox2.Controls.Add(dataGridViewProdutos);
+            groupBox2.Controls.Add(buttonLimparFiltros);
             groupBox2.Controls.Add(labelQuantidade);
+            groupBox2.Controls.Add(buttonPesquisar);
             groupBox2.Controls.Add(labelQuantidadeTotal);
+            groupBox2.Controls.Add(textBoxPesquisa);
             groupBox2.Controls.Add(labelQuantidadeTotalValor);
+            groupBox2.Controls.Add(labelExibir);
+            groupBox2.Controls.Add(comboBoxOrdemColuna);
             groupBox2.Location = new Point(12, 8);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(450, 356);
             groupBox2.TabIndex = 12;
             groupBox2.TabStop = false;
             // 
+            // labelOrdenar
+            // 
+            labelOrdenar.AutoSize = true;
+            labelOrdenar.Location = new Point(179, 1);
+            labelOrdenar.Name = "labelOrdenar";
+            labelOrdenar.Size = new Size(50, 15);
+            labelOrdenar.TabIndex = 13;
+            labelOrdenar.Text = "Ordenar";
+            // 
+            // comboBoxOrdenar
+            // 
+            comboBoxOrdenar.FormattingEnabled = true;
+            comboBoxOrdenar.Items.AddRange(new object[] { "A-Z", "Z-A" });
+            comboBoxOrdenar.Location = new Point(179, 19);
+            comboBoxOrdenar.Name = "comboBoxOrdenar";
+            comboBoxOrdenar.Size = new Size(89, 23);
+            comboBoxOrdenar.TabIndex = 12;
+            // 
+            // ColumnId
+            // 
+            ColumnId.HeaderText = "Código";
+            ColumnId.Name = "ColumnId";
+            ColumnId.ReadOnly = true;
+            // 
+            // ColumnNome
+            // 
+            ColumnNome.HeaderText = "Nome";
+            ColumnNome.Name = "ColumnNome";
+            ColumnNome.ReadOnly = true;
+            // 
+            // ColumnCategoria
+            // 
+            ColumnCategoria.HeaderText = "Categoria";
+            ColumnCategoria.Name = "ColumnCategoria";
+            ColumnCategoria.ReadOnly = true;
+            // 
+            // ColumnPrecoUnitario
+            // 
+            ColumnPrecoUnitario.HeaderText = "Preço Unitário";
+            ColumnPrecoUnitario.Name = "ColumnPrecoUnitario";
+            ColumnPrecoUnitario.ReadOnly = true;
+            // 
             // ProdutoListaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(565, 374);
-            Controls.Add(buttonLimparFiltros);
-            Controls.Add(buttonPesquisar);
-            Controls.Add(textBoxPesquisa);
-            Controls.Add(labelPesquisa);
-            Controls.Add(comboBoxOrdem);
-            Controls.Add(labelOrdem);
             Controls.Add(comboBoxQuantidade);
             Controls.Add(groupBox1);
-            Controls.Add(dataGridViewProdutos);
             Controls.Add(groupBox2);
             MaximizeBox = false;
             Name = "ProdutoListaForm";
@@ -218,7 +275,6 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -232,12 +288,18 @@
         private Label labelQuantidadeTotal;
         private Label labelQuantidade;
         private ComboBox comboBoxQuantidade;
-        private Label labelOrdem;
-        private ComboBox comboBoxOrdem;
+        private Label labelExibir;
+        private ComboBox comboBoxOrdemColuna;
         private Label labelPesquisa;
         private TextBox textBoxPesquisa;
         private Button buttonPesquisar;
         private Button buttonLimparFiltros;
         private GroupBox groupBox2;
+        private ComboBox comboBoxOrdenar;
+        private Label labelOrdenar;
+        private DataGridViewTextBoxColumn ColumnId;
+        private DataGridViewTextBoxColumn ColumnNome;
+        private DataGridViewTextBoxColumn ColumnCategoria;
+        private DataGridViewTextBoxColumn ColumnPrecoUnitario;
     }
 }

@@ -61,6 +61,7 @@
             buttonProdutos.TabIndex = 2;
             buttonProdutos.Text = "Produtos";
             buttonProdutos.UseVisualStyleBackColor = true;
+            buttonProdutos.Click += buttonProdutos_Click;
             // 
             // MenuForm
             // 

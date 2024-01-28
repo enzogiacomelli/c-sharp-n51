@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupermercadoForm.Repositorios;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,13 +21,19 @@ namespace SupermercadoForm.Telas
         private void buttonCategorias_Click(object sender, EventArgs e)
         {
             Form form = new CategoriaForm();
-            form.Show();
+            form.ShowDialog();
         }
 
         private void buttonEstantes_Click(object sender, EventArgs e)
         {
             Form form = new EstantesForms();
-            form.Show();
+            form.ShowDialog();
+        }
+
+        private void buttonProdutos_Click(object sender, EventArgs e)
+        {
+            var form = new ProdutoListaForm();
+            form.ShowDialog();
         }
     }
 }
