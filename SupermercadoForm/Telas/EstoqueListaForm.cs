@@ -42,5 +42,10 @@ namespace SupermercadoForm.Telas
             var form = new EstoqueCadastroForm();
             form.ShowDialog();
         }
+
+        private void buttonAtualizar_Click(object sender, EventArgs e)
+        {
+            ListaEstoquesNoGrid();
+        }
     }
 }

@@ -35,6 +35,7 @@
             ColumnNomeProduto = new DataGridViewTextBoxColumn();
             ColumnQuantidade = new DataGridViewTextBoxColumn();
             buttonNovo = new Button();
+            buttonAtualizar = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEstoques).BeginInit();
             SuspendLayout();
@@ -90,11 +91,22 @@
             buttonNovo.UseVisualStyleBackColor = true;
             buttonNovo.Click += buttonNovo_Click;
             // 
+            // buttonAtualizar
+            // 
+            buttonAtualizar.Location = new Point(475, 63);
+            buttonAtualizar.Name = "buttonAtualizar";
+            buttonAtualizar.Size = new Size(75, 23);
+            buttonAtualizar.TabIndex = 2;
+            buttonAtualizar.Text = "Atualizar";
+            buttonAtualizar.UseVisualStyleBackColor = true;
+            buttonAtualizar.Click += buttonAtualizar_Click;
+            // 
             // EstoqueListaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(558, 316);
+            Controls.Add(buttonAtualizar);
             Controls.Add(buttonNovo);
             Controls.Add(groupBox1);
             MaximizeBox = false;
@@ -116,5 +128,6 @@
         private DataGridViewTextBoxColumn ColumnNomeProduto;
         private DataGridViewTextBoxColumn ColumnQuantidade;
         private Button buttonNovo;
+        private Button buttonAtualizar;
     }
 }
