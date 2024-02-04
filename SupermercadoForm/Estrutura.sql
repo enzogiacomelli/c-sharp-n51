@@ -31,7 +31,18 @@
 --	('Sabonete Dove', 4.99, 9);
 
 
-select * from produtos
-select * from categorias
+--CREATE TABLE estoques(
+--	id INT PRIMARY KEY IDENTITY(1, 1),
+--	id_produto INT NOT NULL,
+--	quantidade DECIMAL(10,2) NOT NULL,
+--	FOREIGN KEY (id_produto) REFERENCES produtos(id)
+--);
 
+--select * from produtos
+--select * from categorias
+--select * from estoques
+
+--INSERT INTO estoques(id_produto, quantidade) VALUES (8, 11)
+
+SELECT estoques.id, id_produto AS 'idProduto', produtos.nome AS 'nomeProduto', estoques.quantidade from estoques inner join produtos ON (estoques.id_produto = produtos.id)
 

@@ -31,6 +31,7 @@
             buttonCategorias = new Button();
             buttonEstantes = new Button();
             buttonProdutos = new Button();
+            buttonEstoque = new Button();
             SuspendLayout();
             // 
             // buttonCategorias
@@ -63,11 +64,22 @@
             buttonProdutos.UseVisualStyleBackColor = true;
             buttonProdutos.Click += buttonProdutos_Click;
             // 
+            // buttonEstoque
+            // 
+            buttonEstoque.Location = new Point(255, 12);
+            buttonEstoque.Name = "buttonEstoque";
+            buttonEstoque.Size = new Size(75, 23);
+            buttonEstoque.TabIndex = 3;
+            buttonEstoque.Text = "Estoques";
+            buttonEstoque.UseVisualStyleBackColor = true;
+            buttonEstoque.Click += buttonEstoque_Click;
+            // 
             // MenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(367, 198);
+            ClientSize = new Size(337, 198);
+            Controls.Add(buttonEstoque);
             Controls.Add(buttonProdutos);
             Controls.Add(buttonEstantes);
             Controls.Add(buttonCategorias);
@@ -83,5 +95,6 @@
         private Button buttonCategorias;
         private Button buttonEstantes;
         private Button buttonProdutos;
+        private Button buttonEstoque;
     }
 }

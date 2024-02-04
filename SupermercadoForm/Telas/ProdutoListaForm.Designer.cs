@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             dataGridViewProdutos = new DataGridView();
+            ColumnId = new DataGridViewTextBoxColumn();
+            ColumnNome = new DataGridViewTextBoxColumn();
+            ColumnCategoria = new DataGridViewTextBoxColumn();
+            ColumnPrecoUnitario = new DataGridViewTextBoxColumn();
             groupBox1 = new GroupBox();
             buttonApagar = new Button();
             buttonEditar = new Button();
@@ -46,10 +50,6 @@
             groupBox2 = new GroupBox();
             labelOrdenar = new Label();
             comboBoxOrdenar = new ComboBox();
-            ColumnId = new DataGridViewTextBoxColumn();
-            ColumnNome = new DataGridViewTextBoxColumn();
-            ColumnCategoria = new DataGridViewTextBoxColumn();
-            ColumnPrecoUnitario = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProdutos).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -67,6 +67,30 @@
             dataGridViewProdutos.RowTemplate.Height = 25;
             dataGridViewProdutos.Size = new Size(438, 227);
             dataGridViewProdutos.TabIndex = 0;
+            // 
+            // ColumnId
+            // 
+            ColumnId.HeaderText = "Código";
+            ColumnId.Name = "ColumnId";
+            ColumnId.ReadOnly = true;
+            // 
+            // ColumnNome
+            // 
+            ColumnNome.HeaderText = "Nome";
+            ColumnNome.Name = "ColumnNome";
+            ColumnNome.ReadOnly = true;
+            // 
+            // ColumnCategoria
+            // 
+            ColumnCategoria.HeaderText = "Categoria";
+            ColumnCategoria.Name = "ColumnCategoria";
+            ColumnCategoria.ReadOnly = true;
+            // 
+            // ColumnPrecoUnitario
+            // 
+            ColumnPrecoUnitario.HeaderText = "Preço Unitário";
+            ColumnPrecoUnitario.Name = "ColumnPrecoUnitario";
+            ColumnPrecoUnitario.ReadOnly = true;
             // 
             // groupBox1
             // 
@@ -234,30 +258,6 @@
             comboBoxOrdenar.Size = new Size(89, 23);
             comboBoxOrdenar.TabIndex = 12;
             // 
-            // ColumnId
-            // 
-            ColumnId.HeaderText = "Código";
-            ColumnId.Name = "ColumnId";
-            ColumnId.ReadOnly = true;
-            // 
-            // ColumnNome
-            // 
-            ColumnNome.HeaderText = "Nome";
-            ColumnNome.Name = "ColumnNome";
-            ColumnNome.ReadOnly = true;
-            // 
-            // ColumnCategoria
-            // 
-            ColumnCategoria.HeaderText = "Categoria";
-            ColumnCategoria.Name = "ColumnCategoria";
-            ColumnCategoria.ReadOnly = true;
-            // 
-            // ColumnPrecoUnitario
-            // 
-            ColumnPrecoUnitario.HeaderText = "Preço Unitário";
-            ColumnPrecoUnitario.Name = "ColumnPrecoUnitario";
-            ColumnPrecoUnitario.ReadOnly = true;
-            // 
             // ProdutoListaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -270,6 +270,7 @@
             Name = "ProdutoListaForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Lista de Produtos";
+            Load += ProdutoListaForm_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewProdutos).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);

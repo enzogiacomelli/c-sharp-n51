@@ -24,5 +24,11 @@
             var form = new ProdutoListaForm();
             form.ShowDialog();
         }
+
+        private void buttonEstoque_Click(object sender, EventArgs e)
+        {
+            var form = new EstoqueListaForm();
+            form.ShowDialog();
+        }
     }
 }

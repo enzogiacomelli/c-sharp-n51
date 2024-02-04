@@ -82,11 +82,13 @@
             // 
             // comboBoxCategoria
             // 
+            comboBoxCategoria.DisplayMember = "Nome";
             comboBoxCategoria.FormattingEnabled = true;
             comboBoxCategoria.Location = new Point(6, 93);
             comboBoxCategoria.Name = "comboBoxCategoria";
             comboBoxCategoria.Size = new Size(247, 23);
             comboBoxCategoria.TabIndex = 12;
+            comboBoxCategoria.ValueMember = "Nome";
             // 
             // labelCategoria
             // 
