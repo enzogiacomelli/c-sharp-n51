@@ -1,5 +1,6 @@
 ﻿using SupermercadoForm.BancoDados;
 using SupermercadoForm.Entidades;
+using SupermercadoForm.Modelos;
 using System.Data;
 
 namespace SupermercadoForm.Repositorios
@@ -18,8 +19,38 @@ namespace SupermercadoForm.Repositorios
             comando.Connection.Close();
         }
 
-        public List<Produto> ObterTodos()
+        public List<Produto> ObterTodos(ProdutoFiltros produtoFiltros)
         {
+            produtoFiltros.Pesquisa = $"%{produtoFiltros.Pesquisa}%"; //concatenando o texto de pesquisa com % %
+
+            //criando parte do select que ordena pelo campo ordenacao
+            
+            if (produtoFiltros.OrdenacaoCampo == "Código")
+            {
+                produtoFiltros.OrdenacaoCampo = "produtos.id";
+
+            }
+            else if (produtoFiltros.OrdenacaoCampo == "Nome")
+            {
+                produtoFiltros.OrdenacaoCampo = "produtos.nome";
+
+            }
+            else if (produtoFiltros.OrdenacaoCampo == "Categoria")
+            {
+                produtoFiltros.OrdenacaoCampo = "categorias.nome";
+
+            }
+            else if (produtoFiltros.OrdenacaoCampo == "Preço Unitário")
+            {
+                produtoFiltros.OrdenacaoCampo = "produtos.preco_unitario";
+            }
+
+            //criando parte do select que ordena alfabeticamente
+            if (produtoFiltros.OrdenacaoOrdem == "Z-A")
+                produtoFiltros.OrdenacaoOrdem = "DESC";
+            else if (produtoFiltros.OrdenacaoOrdem == "A-Z")
+                produtoFiltros.OrdenacaoOrdem = "ASC";
+
             //criando conexão, comando e fazendo select
             var conexao = new ConexaoBancoDados();
             var comando = conexao.Conectar();
@@ -31,7 +62,16 @@ namespace SupermercadoForm.Repositorios
                 "produtos.preco_unitario, " +
                 "categorias.nome AS 'categoriaNome' " +
                 "FROM produtos " +
-                "INNER JOIN categorias ON (produtos.id_categoria = categorias.id)";
+                "INNER JOIN categorias ON (produtos.id_categoria = categorias.id) " +
+                "WHERE produtos.nome LIKE @PESQUISA " +
+                $"ORDER BY {produtoFiltros.OrdenacaoCampo} {produtoFiltros.OrdenacaoOrdem} " +
+                "OFFSET @POSICAO_PAGINACAO ROWS " + //determinar qual sera a pagina
+                "FETCH NEXT @CAMPO_QUANTIDADE ROWS ONLY"; //determinar a quantidade de registros consultados
+
+
+            comando.Parameters.AddWithValue("@PESQUISA", produtoFiltros.Pesquisa);
+            comando.Parameters.AddWithValue("@CAMPO_QUANTIDADE", produtoFiltros.Quantidade);
+            comando.Parameters.AddWithValue("@POSICAO_PAGINACAO", produtoFiltros.Pagina);
 
             //carrega tabela na memoria e executa o comando
             var tabelaEmMemoria = new DataTable();
@@ -64,5 +104,17 @@ namespace SupermercadoForm.Repositorios
             }
             return produtos;
         }
+    
+        public int ObterQuantidadeTotalRegistros()
+        {
+            var conexao = new ConexaoBancoDados();
+            var comando = conexao.Conectar();
+            comando.CommandText = "SELECT COUNT(id) FROM produtos";
+            var registroQuantidade = Convert.ToInt32(comando.ExecuteScalar());//pega um numero inteiro do resultado do select count
+
+            comando.Connection.Close();
+            return registroQuantidade;
+        }
     }
+
 }

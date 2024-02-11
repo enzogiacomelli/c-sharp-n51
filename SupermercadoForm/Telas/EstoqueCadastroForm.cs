@@ -19,14 +19,16 @@ namespace SupermercadoForm.Telas
         {
             comboBoxProdutos.Items.Clear();
 
-            var produtoRepositorio = new ProdutoRepositorio();
+
+
+            /*var produtoRepositorio = new ProdutoRepositorio();
             var produtos = produtoRepositorio.ObterTodos();
 
             for (int i = 0; i < produtos.Count; i++)
             {
                 var produto = produtos[i];
                 comboBoxProdutos.Items.Add(produto);
-            }
+            }*/
         }
 
 
