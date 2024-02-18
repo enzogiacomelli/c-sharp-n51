@@ -36,5 +36,54 @@ namespace SupermercadoForm.Repositorios
             }
             return categorias;//retorna uma lista de objetos da entidade categoria
         }
+
+        public void Cadastrar(Categoria categoria)
+        {
+            var conexao = new ConexaoBancoDados();
+            var comando = conexao.Conectar();
+            comando.CommandText = "INSERT INTO categorias (nome) VALUES (@NOME)";
+            comando.Parameters.AddWithValue("@NOME", categoria.Nome);
+            comando.ExecuteNonQuery();
+            comando.Connection.Close();
+        }
+
+        public void Atualizar(Categoria categoria)
+        {
+            var conexao = new ConexaoBancoDados();
+            var comando = conexao.Conectar();
+            comando.CommandText = "UPDATE categorias SET nome = @NOME WHERE id = @ID";
+            comando.Parameters.AddWithValue("@NOME", categoria.Nome);
+            comando.Parameters.AddWithValue("@ID", categoria.Id);
+            comando.ExecuteNonQuery();
+            comando.Connection.Close();
+        }
+
+        public void Apagar(int id)
+        {
+            var conexao = new ConexaoBancoDados();
+            var comando = conexao.Conectar();
+            comando.CommandText = "DELETE FROM categorias WHERE id = @ID";
+            comando.Parameters.AddWithValue("@ID", id);
+            comando.ExecuteNonQuery();
+            comando.Connection.Close();
+        }
+
+        public Categoria ObterPorId(int id)
+        {
+            var conexao = new ConexaoBancoDados();
+            var comando = conexao.Conectar();
+            comando.CommandText = "SELECT id, nome FROM categorias WHERE id = @ID";
+            var tabelaEmMemoria = new DataTable();
+            tabelaEmMemoria.Load(comando.ExecuteReader());
+            comando.Connection.Close();
+
+            var registro = tabelaEmMemoria.Rows[0];
+            var nome = registro["nome"].ToString();
+
+            var categoria = new Categoria();
+            categoria.Id = id;
+            categoria.Nome = nome;
+            return categoria;
+        }
     }
 }
