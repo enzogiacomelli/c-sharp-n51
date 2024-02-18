@@ -1,11 +1,11 @@
-﻿using SupermercadoForm.BancoDados;
-using SupermercadoForm.Entidades;
-using SupermercadoForm.Modelos;
+﻿using SupermercadoForm.Modelos;
+using SupermercadoRepositorios.BancoDados;
+using SupermercadoRepositorios.Entidades;
 using System.Data;
 
 namespace SupermercadoForm.Repositorios
 {
-    internal class ProdutoRepositorio
+    public class ProdutoRepositorio
     {
         public void Cadastrar(string nome, int idCategoria, decimal precoUnitario)
         {

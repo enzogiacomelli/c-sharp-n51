@@ -1,8 +1,5 @@
 ﻿using SupermercadoForm.Repositorios;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.ComponentModel;
+
 namespace SupermercadoForm.Telas
 {
     public partial class EstoqueListaForm : Form

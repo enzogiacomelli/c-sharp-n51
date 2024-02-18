@@ -1,10 +1,10 @@
-﻿using SupermercadoForm.BancoDados;
-using SupermercadoForm.Entidades;
+﻿using SupermercadoRepositorios.BancoDados;
+using SupermercadoRepositorios.Entidades;
 using System.Data;
 
 namespace SupermercadoForm.Repositorios
 {
-    internal class EstoqueRepositorio
+    public class EstoqueRepositorio
     {
         public List<Estoque> ObterTodos()
         {
@@ -51,17 +51,9 @@ namespace SupermercadoForm.Repositorios
             comando.Parameters.AddWithValue("@IDPRODUTO", estoque.Produto.Id.ToString());
             comando.Parameters.AddWithValue("@QUANTIDADE", estoque.Quantidade.ToString());
             
-            try
-            {
-                comando.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ocorreu um erro ao tentar cadastrar o estoque: " + ex.Message);
-                return;
-            }
+            comando.ExecuteNonQuery();
+            
             comando.Connection.Close();
         }
-
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace SupermercadoForm.Entidades
+﻿namespace SupermercadoRepositorios.Entidades
 {
-    internal class Estoque
+    public class Estoque
     {
         public int Id { get; set; }
         public Produto Produto { get; set; }
