@@ -1,17 +1,16 @@
-﻿using System.Data;
-using System.Data.SqlClient;
+﻿using SupermercadoForm.Entidades;
+using SupermercadoForm.Repositorios;
 
 namespace SupermercadoForm.Telas
 {
     public partial class EstantesForms : Form
     {
-
-        public string ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\egiac\\Desktop\\BancoDados.mdf;Integrated Security=True;Connect Timeout=30";
         private int IdParaEditar = -1; //isso vai definir se o botão salvar vai usar modo de cadastro ou de salvar novo registro
-
+        private IEstanteRepositorio repositorio;
 
         public EstantesForms()
         {
+            repositorio = new EstanteRepositorio();
             InitializeComponent();
         }
 
@@ -43,29 +42,17 @@ namespace SupermercadoForm.Telas
                 return;
             }
 
-            SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = ConnectionString;
-            conexao.Open();
+            var estante = new Estante();
+            estante.Nome = nome;
+            estante.Sigla = sigla;
 
-            SqlCommand comando = conexao.CreateCommand();
-            comando.CommandText = "INSERT INTO estantes (NOME, SIGLA) VALUES (@NOME, @SIGLA)";
-            comando.Parameters.AddWithValue("@NOME", nome);
-            comando.Parameters.AddWithValue("@SIGLA", sigla);
+            repositorio.Cadastrar(estante);
 
-            try
-            {
-                comando.ExecuteNonQuery();
-                MessageBox.Show("Estante salva com sucesso!");
-                textBoxNome.Clear();
-                maskedTextBoxSigla.Clear();
-                ListarEstantes();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ocorreu um erro ao realizar o cadastro: " + ex.Message);
-                return;
-            }
-            conexao.Close();
+            MessageBox.Show("Estante salva com sucesso!");
+            textBoxNome.Clear();
+            maskedTextBoxSigla.Clear();
+            ListarEstantes();
+            LimparCampos();
         }
 
         private void LimparCampos()
@@ -85,36 +72,17 @@ namespace SupermercadoForm.Telas
         {
             EditarEstante();
         }
-        private void EditarEstante()
+        private void EditarEstante() //quando clica em editar, esse metodo joga os valores para os campos da tela
         {
             //pegar a linha selecionada
             DataGridViewRow linhaSelecionada = dataGridViewEstantes.SelectedRows[0];
             //pegar o id da linha selecionada
             IdParaEditar = Convert.ToInt32(linhaSelecionada.Cells[0].Value); //aqui é alterado o IdParaEditar. Isso vai impactar no clique do botão de Cadastrar
+            var estante = repositorio.ObterPorId(IdParaEditar);
+            LimparCampos();
 
-            SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = ConnectionString;
-            conexao.Open();
-
-            //criando comando
-            SqlCommand comando = conexao.CreateCommand();
-            comando.CommandText = "SELECT id, nome, sigla FROM estantes WHERE id = @ID";
-            comando.Parameters.AddWithValue("@ID", IdParaEditar);
-
-            //criando tabela em memoria e populando com os dados lidos do banco
-            DataTable tabelaEmMemoria = new DataTable();
-            tabelaEmMemoria.Load(comando.ExecuteReader());
-
-            //pegando primeira linha da tabela. a tabela em memoria so tem uma linha aqui pois foi populada com um select filtrado por um id especifico, que so retornou um registro.
-            DataRow registro = tabelaEmMemoria.Rows[0];
-
-            string nome = registro["nome"].ToString();
-            string sigla = registro["sigla"].ToString();
-
-            textBoxNome.Text = nome;
-            maskedTextBoxSigla.Text = sigla;
-
-            conexao.Close();
+            textBoxNome.Text = estante.Nome;
+            maskedTextBoxSigla.Text = estante.Sigla;
         }
 
         private void AtualizarEstante()//Atualiza o registro. Só cai aqui se teve clique no botão editar, se não o metodo usado no botão de cadastro vai ser o CadastrarEstante
@@ -123,27 +91,16 @@ namespace SupermercadoForm.Telas
             string nome = textBoxNome.Text;
             string sigla = maskedTextBoxSigla.Text;
 
-            //conectar banco
-            SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = ConnectionString;
-            conexao.Open();
+            var estante = new Estante();
+            estante.Nome = nome;
+            estante.Sigla = sigla;
+            estante.Id = IdParaEditar;
 
-            SqlCommand comando = conexao.CreateCommand();
-            comando.CommandText = "UPDATE estantes SET nome = @NOME, sigla = @SIGLA WHERE id = @ID";
-            comando.Parameters.AddWithValue("@NOME", nome);
-            comando.Parameters.AddWithValue("SIGLA", sigla);
-            comando.Parameters.AddWithValue("ID", IdParaEditar); //id para editar é pego no metodo de EditarEstante.
+            repositorio.Atualizar(estante);
 
-            //executar o update armazenando a quantidade de registros afetados
-            int quantidadeDeRegistrosAfetados = comando.ExecuteNonQuery();
-
-            if(quantidadeDeRegistrosAfetados > 0)
-            {
-                ListarEstantes();
-                LimparCampos();
-                MessageBox.Show("Estante alterada com sucesso!");
-            }
-            conexao.Close();
+            ListarEstantes();
+            LimparCampos();
+           MessageBox.Show("Estante alterada com sucesso!");
         }
 
         private void buttonListar_Click(object sender, EventArgs e)
@@ -153,29 +110,17 @@ namespace SupermercadoForm.Telas
 
         public void ListarEstantes()//listar estantes no grid
         {
-            SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = ConnectionString;
-            conexao.Open();
-
-            SqlCommand comando = conexao.CreateCommand();
-            comando.CommandText = "select id, nome, sigla from estantes";
-
-            DataTable tabelaEmMemoria = new DataTable();
-            tabelaEmMemoria.Load(comando.ExecuteReader());
-
+            string pesquisa = textBoxPesquisar.Text.Trim();
             dataGridViewEstantes.Rows.Clear();
-            for (int i = 0; i < tabelaEmMemoria.Rows.Count; i++)
+            var estantes = repositorio.ObterTodos(pesquisa);
+
+            foreach ( var estante in estantes )
             {
-                //obter o id e o nome do registro percorrido
-                DataRow registro = tabelaEmMemoria.Rows[i];
-                int id = Convert.ToInt32(registro["id"]);
-                string nome = registro["nome"].ToString();
-                string sigla = registro["sigla"].ToString();
-                //listando categorias
-                //adicionando as linhas da tabela em memoria para o datagrid, passando como objeto
-                dataGridViewEstantes.Rows.Add(new object[] { id, nome, sigla });
+                dataGridViewEstantes.Rows.Add(new object[] 
+                {
+                    estante.Id, estante.Nome, estante.Sigla,
+                });
             }
-            conexao.Close();
         }
 
         private void buttonExcluir_Click(object sender, EventArgs e)
@@ -194,7 +139,7 @@ namespace SupermercadoForm.Telas
             //pegando a linha selecionada
             DataGridViewRow linhaSelecionada = dataGridViewEstantes.SelectedRows[0];
             //pegando o id da linha selecionada
-            int id = Convert.ToInt32(linhaSelecionada.Cells[0].Value);//0 pq a primeira coluna do dataGridView é o id
+            int idParaApagar = Convert.ToInt32(linhaSelecionada.Cells[0].Value);//0 pq a primeira coluna do dataGridView é o id
             string nome = linhaSelecionada.Cells[1].Value.ToString();
 
             //vericiando se realmente deseja excluir o registro
@@ -203,27 +148,13 @@ namespace SupermercadoForm.Telas
             {
                 return;
             }
-
-            SqlConnection conexao = new SqlConnection();
-            conexao.ConnectionString = ConnectionString;
-            conexao.Open();
-
-            SqlCommand comando = conexao.CreateCommand();
-            comando.CommandText = "DELETE FROM estantes where id = @ID";
-            comando.Parameters.AddWithValue("@ID", id);
-
-            try
+            else
             {
-                comando.ExecuteNonQuery();
-                MessageBox.Show("Exclusão realizada com sucesso!");
-                ListarEstantes();
+                repositorio.Apagar(idParaApagar);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ocorreu um erro ao tentar realizar a exclusão: " + ex.Message);
-                return;
-            }
-            conexao.Close();
+
+            MessageBox.Show("Exclusão realizada com sucesso!");
+            ListarEstantes();
         }
         private void EstantesForms_Load(object sender, EventArgs e)
         {
@@ -244,32 +175,7 @@ namespace SupermercadoForm.Telas
         {
             if(e.KeyCode == Keys.Enter)
             {
-                string nomePesquisa = textBoxPesquisar.Text;
-                SqlConnection conexao = new SqlConnection();
-                conexao.ConnectionString = ConnectionString;
-                conexao.Open();
-
-                SqlCommand comando = conexao.CreateCommand();
-                comando.CommandText = "SELECT id, nome, sigla FROM estantes WHERE nome LIKE @NOME";
-                comando.Parameters.AddWithValue("@NOME", nomePesquisa);
-
-
-                DataTable tabelaEmMemoria = new DataTable();
-                tabelaEmMemoria.Load(comando.ExecuteReader());
-
-                dataGridViewEstantes.Rows.Clear();
-                for (int i = 0; i < tabelaEmMemoria.Rows.Count; i++)
-                {
-                    //obter o id e o nome do registro percorrido
-                    DataRow registro = tabelaEmMemoria.Rows[i];
-                    int id = Convert.ToInt32(registro["id"]);
-                    string nome = registro["nome"].ToString();
-                    string sigla = registro["sigla"].ToString();
-                    //listando categorias
-                    //adicionando as linhas da tabela em memoria para o datagrid, passando como objeto
-                    dataGridViewEstantes.Rows.Add(new object[] { id, nome, sigla });
-                }
-                conexao.Close();
+                ListarEstantes();
             }
         }
     }
