@@ -1,4 +1,5 @@
 ﻿using SupermercadoForm.Entidades;
+using SupermercadoForm.Modelos;
 using SupermercadoForm.Repositorios;
 
 namespace SupermercadoForm.Telas
@@ -19,16 +20,21 @@ namespace SupermercadoForm.Telas
         {
             comboBoxProdutos.Items.Clear();
 
+            var filtro = new ProdutoFiltros();
+            filtro.OrdenacaoCampo = "Código";
+            filtro.OrdenacaoOrdem = "A-Z";
+            filtro.Pesquisa = "";
+            filtro.Pagina = 1;
+            filtro.Quantidade = 100;
 
-
-            /*var produtoRepositorio = new ProdutoRepositorio();
-            var produtos = produtoRepositorio.ObterTodos();
+            var produtoRepositorio = new ProdutoRepositorio();
+            var produtos = produtoRepositorio.ObterTodos(filtro);
 
             for (int i = 0; i < produtos.Count; i++)
             {
                 var produto = produtos[i];
                 comboBoxProdutos.Items.Add(produto);
-            }*/
+            }
         }
 
 

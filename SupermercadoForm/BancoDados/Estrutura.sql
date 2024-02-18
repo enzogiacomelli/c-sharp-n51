@@ -1,7 +1,15 @@
-﻿DROP TABLE IF EXISTS estoques;
-DROP TABLE IF EXISTS produtos;
-DROP TABLE IF EXISTS estantes;
-DROP TABLE IF EXISTS categorias;
+﻿--DROP TABLE IF EXISTS estoques;
+--DROP TABLE IF EXISTS produtos;
+--DROP TABLE IF EXISTS estantes;
+--DROP TABLE IF EXISTS categorias;
+
+
+CREATE TABLE estoques(
+	id INT PRIMARY KEY IDENTITY(1,1),
+	id_produto int not null,
+	quantidade DECIMAL,
+	FOREIGN KEY (id_produto) REFERENCES produtos(id) 
+);
 
 CREATE TABLE categorias(
 	id INT PRIMARY KEY IDENTITY(1,1),
