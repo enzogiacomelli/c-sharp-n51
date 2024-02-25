@@ -1,8 +1,7 @@
 ﻿namespace SupermercadoRepositorios.Entidades
 {
-    public class Categoria
+    public class Categoria : EntidadeBase
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
     }
 }

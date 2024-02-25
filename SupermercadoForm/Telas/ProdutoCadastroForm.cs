@@ -5,11 +5,35 @@ namespace SupermercadoForm.Telas
 {
     public partial class ProdutoCadastroForm : Form
     {
+        int IdProdutoEditar = -1;
         public ProdutoCadastroForm()
         {
             InitializeComponent();
             PreencherDadosCategorias();
         }
+
+        public ProdutoCadastroForm(Produto produto)//sobrecarga
+        {//abre a tela de cadastro com informações de produtos no campo, usado para edição de produtos
+            InitializeComponent();
+            PreencherDadosCategorias();
+
+            IdProdutoEditar = produto.Id;
+            textBoxNome.Text = produto.Nome;
+            textBoxPrecoUnitario.Text = produto.PrecoUnitario.ToString();
+
+            //selecionar a categoria do produto no combobox categoria
+            foreach(var item in comboBoxCategoria.Items)//para cada item na coleção de items do combobox
+            {
+                var categoria = (Categoria)item;//pega a categoria na coleção do combobox
+                var categoriaId = categoria.Id;//pega o id dessa categoria
+                if(categoriaId == produto.Categoria.Id)//compara com o id da categoria do objeto produto
+                {
+                    comboBoxCategoria.SelectedItem = categoria;
+                    break;
+                }
+            }
+        }
+
 
         private void PreencherDadosCategorias()
         {
@@ -38,8 +62,28 @@ namespace SupermercadoForm.Telas
             var idCategoria = categoria.Id;
 
             var repositorio = new ProdutoRepositorio();
-            repositorio.Cadastrar(nome, idCategoria, precoUnitario);
-            MessageBox.Show("Produto cadastrado com sucesso!");
+
+            var produto = new Produto()
+            {
+                Nome = nome,
+                PrecoUnitario = precoUnitario,
+                Categoria = new Categoria()
+                {
+                    Id = idCategoria
+                }
+            };
+
+            if(IdProdutoEditar == -1)
+            {
+                repositorio.Cadastrar(produto);
+                MessageBox.Show("Produto cadastrado com sucesso!");
+            }
+            else
+            {
+                produto.Id = IdProdutoEditar;
+                repositorio.Atualizar(produto);
+                MessageBox.Show("Produto atualizado com sucesso");
+            }
         }
     }
 }

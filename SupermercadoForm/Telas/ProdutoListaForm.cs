@@ -1,16 +1,21 @@
 ﻿using SupermercadoForm.Modelos;
 using SupermercadoForm.Repositorios;
+using SupermercadoRepositorios.Entidades;
+using SupermercadoRepositorios.Repositorios;
 
 namespace SupermercadoForm.Telas
 {
     public partial class ProdutoListaForm : Form
     {
+        private IProdutoRepositorio produtoRepositorio; //usando de outro projeto
         private int posicaoPaginacao = 0;
         private int QuantidadeRegistros = 0;
 
         public ProdutoListaForm()
         {
             InitializeComponent();
+
+            produtoRepositorio = new ProdutoRepositorio();
             comboBoxExibir.SelectedIndex = 0;
             comboBoxQuantidade.SelectedIndex = 0;
             comboBoxOrdenar.SelectedIndex = 0;
@@ -41,7 +46,6 @@ namespace SupermercadoForm.Telas
             produtoFiltros.Pagina = posicaoPaginacao;
 
 
-            var produtoRepositorio = new ProdutoRepositorio();
             var produtos = produtoRepositorio.ObterTodos(produtoFiltros);
 
             //percorrer todos os produtos adicionando no datagrid
@@ -160,6 +164,32 @@ namespace SupermercadoForm.Telas
             comboBoxOrdenar.SelectedIndex = 0;
             textBoxPesquisa.Clear();
             PreencherDataGridViewComProdutos();
+        }
+
+        private void buttonApagar_Click(object sender, EventArgs e)
+        {
+            var linhaSelecionada = dataGridViewProdutos.SelectedRows[0];
+            var id = Convert.ToInt32(linhaSelecionada.Cells[0].Value);
+            var nome = linhaSelecionada.Cells[1].Value.ToString();
+
+            var resposta = MessageBox.Show($"Deseja realmente apagar o {nome}?", "AVISO", MessageBoxButtons.YesNo);
+
+            if (resposta == DialogResult.No)
+                return;
+
+            produtoRepositorio.Apagar(id);
+            PreencherDataGridViewComProdutos();
+        }
+
+        private void buttonEditar_Click(object sender, EventArgs e)
+        {
+            var linhaSelecionada = dataGridViewProdutos.SelectedRows[0];//pega a linha
+            var id = Convert.ToInt32(linhaSelecionada.Cells[0].Value);//pega o id na linha
+
+            var produtoSelecionado = produtoRepositorio.ObterPorId(id);//busca produto por id
+
+            var produtoCadastroForm = new ProdutoCadastroForm(produtoSelecionado);//instancia form de cadastro
+            produtoCadastroForm.ShowDialog();//abre form
         }
     }
 }

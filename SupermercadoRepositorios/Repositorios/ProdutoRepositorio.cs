@@ -1,23 +1,35 @@
 ﻿using SupermercadoForm.Modelos;
 using SupermercadoRepositorios.BancoDados;
 using SupermercadoRepositorios.Entidades;
+using SupermercadoRepositorios.Repositorios;
 using System.Data;
 
 namespace SupermercadoForm.Repositorios
 {
-    public class ProdutoRepositorio
+    public class ProdutoRepositorio : IProdutoRepositorio
     {
-        public void Cadastrar(string nome, int idCategoria, decimal precoUnitario)
+        public void Cadastrar(Produto produto)
         {
             var conexao = new ConexaoBancoDados();
             var comando = conexao.Conectar();
             comando.CommandText = "INSERT INTO produtos (nome, id_categoria, preco_unitario) VALUES (@NOME, @ID_CATEGORIA, @PRECO_UNITARIO)";
-            comando.Parameters.AddWithValue("@NOME", nome);
-            comando.Parameters.AddWithValue("@ID_CATEGORIA", idCategoria);
-            comando.Parameters.AddWithValue("@PRECO_UNITARIO", precoUnitario);
+            comando.Parameters.AddWithValue("@NOME", produto.Nome);
+            comando.Parameters.AddWithValue("@ID_CATEGORIA", produto.Categoria.Id);
+            comando.Parameters.AddWithValue("@PRECO_UNITARIO", produto.PrecoUnitario);
             comando.ExecuteNonQuery();
             comando.Connection.Close();
         }
+
+        public void Apagar(int id)
+        {
+            var conexao = new ConexaoBancoDados();
+            var comando = conexao.Conectar();
+            comando.CommandText = "DELETE FROM produtos WHERE id = @ID";
+            comando.Parameters.AddWithValue("@ID", id);
+            comando.ExecuteNonQuery();
+            comando.Connection.Close();
+        }
+
 
         public List<Produto> ObterTodos(ProdutoFiltros produtoFiltros)
         {
@@ -115,6 +127,42 @@ namespace SupermercadoForm.Repositorios
             comando.Connection.Close();
             return registroQuantidade;
         }
-    }
 
+        public Produto ObterPorId(int id)
+        {
+            var conexao = new ConexaoBancoDados();
+            var comando = conexao.Conectar();
+            comando.CommandText = "SELECT * FROM produtos WHERE id = @ID";
+            comando.Parameters.AddWithValue("@ID", id);
+            var tabelaEmMemoria = new DataTable();
+            tabelaEmMemoria.Load(comando.ExecuteReader());
+            comando.Connection.Close();
+
+            var registro = tabelaEmMemoria.Rows[0];
+            var produto = new Produto();
+            produto.Id = Convert.ToInt32(registro["id"]);
+            produto.Nome = registro["nome"].ToString();
+            produto.PrecoUnitario = Convert.ToDecimal(registro["preco_unitario"]);
+            produto.Categoria = new Categoria();
+            produto.Categoria.Id = Convert.ToInt32(registro["id_categoria"]);
+            return produto;
+        }
+
+        public void Atualizar(Produto produto)
+        {
+            var conexao = new ConexaoBancoDados();
+            var comando = conexao.Conectar();
+            comando.CommandText = "UPDATE produtos SET " +
+                "nome = @NOME, " +
+                "id_categoria = @ID_CATEGORIA, " +
+                "preco_unitario = @PRECO_UNITARIO, " +
+                "WHERE id = @ID";
+            comando.Parameters.AddWithValue("@NOME", produto.Nome);
+            comando.Parameters.AddWithValue("@ID_CATEGORIA", produto.Categoria.Id);
+            comando.Parameters.AddWithValue("@PRECO_UNITARIO", produto.PrecoUnitario);
+            comando.Parameters.AddWithValue("@ID", produto.Id);
+            comando.ExecuteNonQuery();
+            comando.Connection.Close();
+        }
+    }
 }

@@ -66,7 +66,7 @@
             dataGridViewProdutos.Location = new Point(6, 84);
             dataGridViewProdutos.Name = "dataGridViewProdutos";
             dataGridViewProdutos.ReadOnly = true;
-            dataGridViewProdutos.RowTemplate.Height = 25;
+            dataGridViewProdutos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewProdutos.Size = new Size(438, 227);
             dataGridViewProdutos.TabIndex = 0;
             // 
@@ -116,6 +116,7 @@
             buttonApagar.TabIndex = 2;
             buttonApagar.Text = "Apagar";
             buttonApagar.UseVisualStyleBackColor = true;
+            buttonApagar.Click += buttonApagar_Click;
             // 
             // buttonEditar
             // 
@@ -125,6 +126,7 @@
             buttonEditar.TabIndex = 1;
             buttonEditar.Text = "Editar";
             buttonEditar.UseVisualStyleBackColor = true;
+            buttonEditar.Click += buttonEditar_Click;
             // 
             // buttonNovo
             // 
