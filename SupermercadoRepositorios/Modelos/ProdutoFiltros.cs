@@ -1,4 +1,4 @@
-﻿namespace SupermercadoForm.Modelos
+﻿namespace SupermercadoRepositorios.Modelos
 {
     public class ProdutoFiltros
     {

@@ -1,4 +1,4 @@
-﻿using SupermercadoForm.Repositorios;
+﻿using SupermercadoRepositorios.Repositorios;
 
 namespace SupermercadoForm.Telas
 {

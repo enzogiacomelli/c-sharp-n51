@@ -1,5 +1,5 @@
-﻿using SupermercadoForm.Repositorios;
-using SupermercadoRepositorios.Entidades;
+﻿using SupermercadoRepositorios.Entidades;
+using SupermercadoRepositorios.Repositorios;
 
 namespace SupermercadoForm.Telas
 {
@@ -91,10 +91,10 @@ namespace SupermercadoForm.Telas
             string nome = textBoxNome.Text;
             string sigla = maskedTextBoxSigla.Text;
 
-            var estante = new Estante();
+            var estante = repositorio.ObterPorId(IdParaEditar);
             estante.Nome = nome;
             estante.Sigla = sigla;
-            estante.Id = IdParaEditar;
+            //estante.Id = IdParaEditar;
 
             repositorio.Atualizar(estante);
 

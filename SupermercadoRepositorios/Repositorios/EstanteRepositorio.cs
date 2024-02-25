@@ -2,29 +2,38 @@
 using SupermercadoRepositorios.Entidades;
 using System.Data;
 
-namespace SupermercadoForm.Repositorios
+namespace SupermercadoRepositorios.Repositorios
 {
     public class EstanteRepositorio : IEstanteRepositorio
     {
-        private ConexaoBancoDados conexao;
+        //private ConexaoBancoDados conexao;
+        private readonly SupermercadoContexto _contexto;
 
         //construtor
         public EstanteRepositorio()
         {
-            conexao = new ConexaoBancoDados(); //instanciando objeto da classe conexaoBancoDados para usar abaixo.
+            _contexto = new SupermercadoContexto();
+            //conexao = new ConexaoBancoDados(); //instanciando objeto da classe conexaoBancoDados para usar abaixo.
         }
 
         public void Apagar(int id)
         {
+            var estante = ObterPorId(id);
+            _contexto.Estantes.Remove(estante);
+            /*
             var comando = conexao.Conectar();
             comando.CommandText = "DELETE FROM estantes WHERE id = @ID";
             comando.Parameters.AddWithValue("@ID", id);
             comando.ExecuteNonQuery();
             comando.Connection.Close();
+            */
         }
 
         public void Atualizar(Estante estante)
         {
+            _contexto.Estantes.Update(estante);
+            _contexto.SaveChanges();
+            /*
             var comando = conexao.Conectar();
             comando.CommandText = "UPDATE estantes SET nome = @NOME, sigla = @SIGLA WHERE id = @ID";
             comando.Parameters.AddWithValue("@ID", estante.Id);
@@ -32,21 +41,28 @@ namespace SupermercadoForm.Repositorios
             comando.Parameters.AddWithValue("@SIGLA", estante.Sigla);
             comando.ExecuteNonQuery();
             comando.Connection.Close();
+            */
         }
 
-        public void Cadastrar(Estante estante) 
+        public void Cadastrar(Estante estante)
         {
+            _contexto.Estantes.Add(estante);
+            _contexto.SaveChanges();
+            /*
             var comando = conexao.Conectar();
             comando.CommandText = "INSERT INTO estantes (nome, sigla) VALUES (@NOME, @SIGLA)";
             comando.Parameters.AddWithValue("@NOME", estante.Nome);
             comando.Parameters.AddWithValue("@SIGLA", estante.Sigla);
             comando.ExecuteNonQuery();
             comando.Connection.Close();
+            */
         }
 
 
         public Estante ObterPorId(int id)
         {
+            return _contexto.Estantes.Where(x => x.Id == id).FirstOrDefault();
+            /*
             var comando = conexao.Conectar();
             comando.CommandText = "SELECT id, nome, sigla FROM estantes WHERE id = @ID";
             comando.Parameters.AddWithValue("@ID", id);
@@ -60,10 +76,13 @@ namespace SupermercadoForm.Repositorios
             estante.Nome = registro["nome"].ToString();
             estante.Sigla = registro["sigla"].ToString();
             return estante;
+            */
         }
 
-        public List<Estante>ObterTodos(string pesquisa) 
+        public List<Estante> ObterTodos(string pesquisa)
         {
+            return _contexto.Estantes.Where(x => x.Nome.Contains(pesquisa)).ToList();
+            /*
             pesquisa = $"%{pesquisa}%";
             var comando = conexao.Conectar();
             comando.CommandText = "SELECT id, nome, sigla FROM estantes WHERE nome LIKE @PESQUISA";
@@ -83,6 +102,7 @@ namespace SupermercadoForm.Repositorios
                 estantes.Add(estante);
             }
             return estantes;
+            */
         }
     }
 }

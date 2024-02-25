@@ -1,6 +1,4 @@
-﻿using SupermercadoForm.Modelos;
-using SupermercadoForm.Repositorios;
-using SupermercadoRepositorios.Entidades;
+﻿using SupermercadoRepositorios.Modelos;
 using SupermercadoRepositorios.Repositorios;
 
 namespace SupermercadoForm.Telas

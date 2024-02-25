@@ -1,15 +1,26 @@
-﻿using SupermercadoForm.Modelos;
+﻿using Microsoft.EntityFrameworkCore;
 using SupermercadoRepositorios.BancoDados;
 using SupermercadoRepositorios.Entidades;
-using SupermercadoRepositorios.Repositorios;
+using SupermercadoRepositorios.Modelos;
 using System.Data;
 
-namespace SupermercadoForm.Repositorios
+namespace SupermercadoRepositorios.Repositorios
 {
     public class ProdutoRepositorio : IProdutoRepositorio
     {
+
+        private readonly SupermercadoContexto _contexto;
+
+        public ProdutoRepositorio()
+        {
+            _contexto = new SupermercadoContexto();
+        }
+
         public void Cadastrar(Produto produto)
         {
+            _contexto.Produtos.Add(produto);
+            _contexto.SaveChanges();
+            /*
             var conexao = new ConexaoBancoDados();
             var comando = conexao.Conectar();
             comando.CommandText = "INSERT INTO produtos (nome, id_categoria, preco_unitario) VALUES (@NOME, @ID_CATEGORIA, @PRECO_UNITARIO)";
@@ -18,25 +29,35 @@ namespace SupermercadoForm.Repositorios
             comando.Parameters.AddWithValue("@PRECO_UNITARIO", produto.PrecoUnitario);
             comando.ExecuteNonQuery();
             comando.Connection.Close();
+            */
         }
 
         public void Apagar(int id)
         {
+            var produto = ObterPorId(id);
+            _contexto.Produtos.Remove(produto);
+            _contexto.SaveChanges();
+            /*
             var conexao = new ConexaoBancoDados();
             var comando = conexao.Conectar();
             comando.CommandText = "DELETE FROM produtos WHERE id = @ID";
             comando.Parameters.AddWithValue("@ID", id);
             comando.ExecuteNonQuery();
             comando.Connection.Close();
+            */
         }
 
 
         public List<Produto> ObterTodos(ProdutoFiltros produtoFiltros)
         {
+            return _contexto.Produtos
+                .Include(x => x.Categoria)//inner join (incluindo no select o inner join com a tabela de categorias)
+                .ToList();
+            /*
             produtoFiltros.Pesquisa = $"%{produtoFiltros.Pesquisa}%"; //concatenando o texto de pesquisa com % %
 
             //criando parte do select que ordena pelo campo ordenacao
-            
+
             if (produtoFiltros.OrdenacaoCampo == "Código")
             {
                 produtoFiltros.OrdenacaoCampo = "produtos.id";
@@ -94,7 +115,7 @@ namespace SupermercadoForm.Repositorios
             var produtos = new List<Produto>();
 
             //percorrer os registros armazenados na tabema em memoria
-            for(var i = 0; i < tabelaEmMemoria.Rows.Count; i++)
+            for (var i = 0; i < tabelaEmMemoria.Rows.Count; i++)
             {
                 //obtendo registro
                 var registro = tabelaEmMemoria.Rows[i];
@@ -115,10 +136,13 @@ namespace SupermercadoForm.Repositorios
                 produtos.Add(produto);
             }
             return produtos;
+            */
         }
-    
+
         public int ObterQuantidadeTotalRegistros()
         {
+            return _contexto.Produtos.Count();
+            /*
             var conexao = new ConexaoBancoDados();
             var comando = conexao.Conectar();
             comando.CommandText = "SELECT COUNT(id) FROM produtos";
@@ -126,10 +150,13 @@ namespace SupermercadoForm.Repositorios
 
             comando.Connection.Close();
             return registroQuantidade;
+            */
         }
 
         public Produto ObterPorId(int id)
         {
+            return _contexto.Produtos.Where(x => x.Id == id).FirstOrDefault();
+            /*
             var conexao = new ConexaoBancoDados();
             var comando = conexao.Conectar();
             comando.CommandText = "SELECT * FROM produtos WHERE id = @ID";
@@ -146,10 +173,14 @@ namespace SupermercadoForm.Repositorios
             produto.Categoria = new Categoria();
             produto.Categoria.Id = Convert.ToInt32(registro["id_categoria"]);
             return produto;
+            */
         }
 
         public void Atualizar(Produto produto)
         {
+            _contexto.Produtos.Update(produto);
+            _contexto.SaveChanges();
+            /*
             var conexao = new ConexaoBancoDados();
             var comando = conexao.Conectar();
             comando.CommandText = "UPDATE produtos SET " +
@@ -163,6 +194,7 @@ namespace SupermercadoForm.Repositorios
             comando.Parameters.AddWithValue("@ID", produto.Id);
             comando.ExecuteNonQuery();
             comando.Connection.Close();
+            */
         }
     }
 }

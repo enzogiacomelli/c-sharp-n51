@@ -1,5 +1,3 @@
-using SupermercadoForm.Repositorios;
-
 namespace SupermercadoForm.Telas
 {
     internal static class Program

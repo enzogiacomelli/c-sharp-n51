@@ -2,7 +2,7 @@
 using SupermercadoRepositorios.Entidades;
 using System.Data;
 
-namespace SupermercadoForm.Repositorios
+namespace SupermercadoRepositorios.Repositorios
 {
     public class EstoqueRepositorio
     {
@@ -50,9 +50,9 @@ namespace SupermercadoForm.Repositorios
             comando.CommandText = "INSERT INTO estoques(id_produto, quantidade) VALUES (@IDPRODUTO, @QUANTIDADE)";
             comando.Parameters.AddWithValue("@IDPRODUTO", estoque.Produto.Id.ToString());
             comando.Parameters.AddWithValue("@QUANTIDADE", estoque.Quantidade.ToString());
-            
+
             comando.ExecuteNonQuery();
-            
+
             comando.Connection.Close();
         }
     }

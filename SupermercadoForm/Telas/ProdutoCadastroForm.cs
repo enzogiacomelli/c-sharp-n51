@@ -1,5 +1,5 @@
-﻿using SupermercadoForm.Repositorios;
-using SupermercadoRepositorios.Entidades;
+﻿using SupermercadoRepositorios.Entidades;
+using SupermercadoRepositorios.Repositorios;
 
 namespace SupermercadoForm.Telas
 {
@@ -59,31 +59,32 @@ namespace SupermercadoForm.Telas
             var nome = textBoxNome.Text;
             var precoUnitario = Convert.ToDecimal(textBoxPrecoUnitario.Text);
             //var idCategoria = comboBoxCategoria.SelectedIndex;
-            var idCategoria = categoria.Id;
+            //var idCategoria = categoria.Id;
 
             var repositorio = new ProdutoRepositorio();
 
-            var produto = new Produto()
-            {
-                Nome = nome,
-                PrecoUnitario = precoUnitario,
-                Categoria = new Categoria()
-                {
-                    Id = idCategoria
-                }
-            };
+            Produto produto;
 
             if(IdProdutoEditar == -1)
             {
+                produto = new Produto()
+                {
+                    Nome = nome,
+                    PrecoUnitario = precoUnitario,
+                    Categoria = categoria
+                };
                 repositorio.Cadastrar(produto);
                 MessageBox.Show("Produto cadastrado com sucesso!");
+                return;
             }
-            else
-            {
-                produto.Id = IdProdutoEditar;
-                repositorio.Atualizar(produto);
-                MessageBox.Show("Produto atualizado com sucesso");
-            }
+
+            produto = repositorio.ObterPorId(IdProdutoEditar);
+            produto.Nome = nome;
+            produto.PrecoUnitario = precoUnitario;
+            produto.Categoria = categoria;
+
+            repositorio.Atualizar(produto);
+            MessageBox.Show("Produto atualizado com sucesso");
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using SupermercadoForm.Repositorios;
-using SupermercadoRepositorios.Entidades;
+﻿using SupermercadoRepositorios.Entidades;
+using SupermercadoRepositorios.Repositorios;
 
 namespace SupermercadoForm.Telas
 {
     public partial class CategoriaForm : Form
     {
 
-        private CategoriaRepositorio repositorio; //criando o repositorio
+        private ICategoriaRepositorio repositorio; //criando o repositorio
 
         public CategoriaForm()
         {
